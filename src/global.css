@@ -1,0 +1,112 @@
+/* scrollbar */
+@import 'simplebar-react/dist/simplebar.min.css';
+
+/* lazy image */
+@import 'react-lazy-load-image-component/src/effects/blur.css';
+
+/* map */
+@import 'mapbox-gl/dist/mapbox-gl.css';
+
+/* editor */
+@import 'react-quill/dist/quill.snow.css';
+
+/* carousel */
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
+
+/* lightbox */
+@import 'yet-another-react-lightbox/styles.css';
+@import 'yet-another-react-lightbox/plugins/captions.css';
+@import 'yet-another-react-lightbox/plugins/thumbnails.css';
+
+/* *:before,
+*:after {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+
+.img-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.inner-img {
+    transition: transform 0.7s ease;
+}
+
+.img-wrapper:hover .inner-img {
+    transform: scale(1.1);
+}
+.wishlist-product-list {
+  margin-top: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.margin-left {}
+
+.details .input-bg {
+  padding: 25px;
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.select-add {
+  border-radius: 5px;
+  background-color: #F3E9EA;
+  color: #781028;
+}
+
+.product {
+  background-color: #F2F2F2;
+}
+
+.details h1 {
+  font-size: 20px;
+  font-weight: 400;
+} */
+
+/* .css-hodl8b-MuiStack-root{
+    gap: 10px!important;
+}
+.css-hodl8b-MuiStack-root label{
+    font-size: 14px;
+    font-weight: 400;
+}
+.table-permission{
+    border-collapse: collapse;
+}
+.table-permission th{
+    background: #00000038;
+    padding: 12px;
+    border: 1px solid #00000000;
+}
+.table-permission td{
+    padding: 5px 5px 5px 8px;
+    border: 1px solid #ffffff0d;
+    outline: none;
+    box-shadow: none;
+    margin: 0;
+   
+}
+.filterAccordion{
+    margin: 8px 10px 10px 5px;
+}
+.filterAccordion .css-90h10p-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded{
+    min-height: auto;
+}
+.filterAccordion .css-o4b71y-MuiAccordionSummary-content.Mui-expanded {
+    margin: 12px 0;
+}
+.filterAccordion .css-15v22id-MuiAccordionDetails-root {
+    padding: 0px 16px 16px 16px;
+} */

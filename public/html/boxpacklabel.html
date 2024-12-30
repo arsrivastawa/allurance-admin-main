@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Label</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .label-container {
+            width: 300px;
+            border: 1px solid #000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            margin: 5px 0;
+            font-size: 16px;
+            /* Adjust font size */
+            color: #333;
+            /* Adjust text color */
+        }
+
+        .highlight {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px dashed #000;
+            padding: 10px;
+
+        }
+
+        .highlight .number {
+            font-size: 24px;
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            border-radius: 50%;
+            text-align: center;
+            min-width: 40px;
+        }
+
+        .barcode {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .barcode img {
+            width: 100%;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            border-top: 1px dashed #000;
+            padding-top: 10px;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="label-container">
+        <div class="logo">ALLURANCE</div>
+        <div class="section">
+            <p>Category: {{category_name}}</p>
+            <p>Model Number: {{model_number}}</p>
+            <p>Batch Number: {{batch_number}}</p>
+            <p>Serial Number: {{serial_number}}</p>
+        </div>
+        <div class="highlight">
+            <div class="number">20</div>
+        </div>
+        <div class="barcode">
+            <img src="{{barcodeUrl}}" alt="Barcode">
+        </div>
+        <div class="section">
+            <p>Maximum Retail Price (MRP):</p>
+            <p><strong>₹ {{price}}</strong></p>
+        </div>
+        <div class="footer">
+            <p>Manufactured & Marketed by:</p>
+            <p><strong>ALLURANCE PRIVATE LIMITED</strong></p>
+            <p>KESHAV NAGAR BACKSIDE GUGGA MAADI</p>
+            <p>SAMANA, PATIALA, PUNJAB</p>
+            <p>INDIA - 147101</p>
+            <p><strong>FOR SALE IN INDIA ONLY</strong></p>
+        </div>
+    </div>
+</body>
+
+</html>

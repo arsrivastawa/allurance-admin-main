@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: black;
+            /* Added to set text color to black */
+        }
+
+        .invoice-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .invoice-header img {
+            height: 50px;
+        }
+
+        .invoice-body h2 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .invoice-body p {
+            margin: 5px 0;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .invoice-table th,
+        .invoice-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .invoice-total {
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <div>
+                <h1>Invoice INE</h1>
+                <p>Invoice ID: <span style="color: black;">{{invoice_id}}</span></p>
+                <p>Status: <span style="color: black;">{{order_status}}</span></p>
+            </div>
+            <div>
+                <img src="/logo/Allurance_Logo.svg" alt="Logo">
+            </div>
+        </div>
+        <div class="invoice-body">
+            <h2>Invoice From</h2>
+            <p><span style="color: black;">{{assisted_by}}</span></p>
+            <p>Phone: <span style="color: black;">{{from_phone}}</span></p>
+
+            <h2>Invoice To</h2>
+            <p><span style="color: black;">{{to_name}}</span></p>
+            <p><span style="color: black;">{{to_address_line_1}}</span></p>
+            <p><span style="color: black;">{{to_address_line_2}}</span></p>
+            <p><span style="color: black;">{{to_landmark}}, {{to_district}}, {{to_state}}, {{to_country}} -
+                    {{to_pincode}}</span></p>
+            <p>Phone: <span style="color: black;">{{to_phone}}</span></p>
+
+            <h2>Date Created</h2>
+            <p><span style="color: black;">{{created_at}}</span></p>
+        </div>
+
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{products}}
+            </tbody>
+        </table>
+
+        <div class="invoice-total">
+            <p>Subtotal: <span style="color: black;">{{subtotal}}</span></p>
+            <p>Discount: <span style="color: black;">{{discount}}</span></p>
+            <p>Tax (18%): <span style="color: black;">{{tax}}</span></p>
+            <p>Total: <span style="color: black;">{{total}}</span></p>
+        </div>
+    </div>
+</body>
+
+</html>

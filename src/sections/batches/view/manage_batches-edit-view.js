@@ -1,0 +1,71 @@
+'use client';
+
+import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+
+import Container from '@mui/material/Container';
+
+import { paths } from 'src/routes/paths';
+
+import { useSettingsContext } from 'src/components/settings';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+
+import ProductNewEditForm from '../manage_batches-new-edit-form';
+import { GIFT_CARD_ENDPOINT } from '../../../utils/apiEndPoints';
+import { ManageAPIsData } from 'src/utils/commonFunction';
+
+export default function ProductEditView({ id }) {
+  const settings = useSettingsContext();
+  const [fetchedData, setFetchedData] = useState(null);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = `${GIFT_CARD_ENDPOINT}?id=${id}`;
+        const response = await ManageAPIsData(apiUrl, 'GET');
+        if (!response.ok) {
+          console.error("Error fetching data:", response.statusText);
+          return;
+        }
+        const responseData = await response.json();
+        if (Object.keys(responseData).length) {
+
+          setFetchedData(responseData.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [id]); // Empty dependency array to fetch data only once when the component mounts
+
+  // const { product: currentProduct } = useGetProduct(id);
+
+  return (
+    <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+      <CustomBreadcrumbs
+        heading="Edit"
+        links={[
+          { name: 'Dashboard', href: paths.dashboard.root },
+          {
+            name: 'Batches',
+            href: paths.dashboard.manage_batches.root,
+          },
+          { name: 'Edit' },
+        ]}
+        sx={{
+          mb: { xs: 3, md: 5 },
+        }}
+      />
+
+      {/* Pass the fetchedData to ProductNewEditForm */}
+      <ProductNewEditForm currentProduct={fetchedData} fetchedData={fetchedData} />
+    </Container>
+  );
+}
+
+ProductEditView.propTypes = {
+  id: PropTypes.string,
+};
