@@ -285,6 +285,7 @@ export default function ProductNewEditForm({ currentProduct }) {
   const getListingData = async () => {
     try {
       const token = await sessionStorage.getItem('accessToken');
+      console.log("token"+token)
       if (!token) {
         console.error('Token is undefined.');
         return;

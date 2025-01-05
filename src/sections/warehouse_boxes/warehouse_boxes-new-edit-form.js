@@ -49,8 +49,7 @@ export default function ProductNewEditForm({ currentProduct }) {
   const { enqueueSnackbar } = useSnackbar();
   const [rackOptions, setrackOptions] = useState([]);
   const [AllCartons, setAllCartons] = useState([]);
-  const [selectedValues, setSelectedValues] = useState([]);
-  const [allChecked, setAllChecked] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const NewProductSchema = Yup.object().shape({
     rack_id: Yup.string().required('Rack name is required'),
@@ -108,7 +107,8 @@ export default function ProductNewEditForm({ currentProduct }) {
         return;
       }
       const user = await FetchUserDetail();
-      data.box_id = selectedValues;
+      const updatedValues = inputValue.split(",").map((item) => item.trim()).filter((item, index, self) => self.indexOf(item) === index);
+      data.box_id = updatedValues;
       const apiUrl = Product
         ? `${WAREHOUE_BOXES_ENDPOINT}?id=${Product.id}`
         : WAREHOUE_BOXES_ENDPOINT;
@@ -200,34 +200,15 @@ export default function ProductNewEditForm({ currentProduct }) {
       const preselectedBoxIds = Product?.warehouse_boxes_data_array
         ? Product.warehouse_boxes_data_array.split(',').map((item) => String(item.trim()))
         : [];
-      setSelectedValues(preselectedBoxIds);
-      setAllChecked(preselectedBoxIds.length === AllCartons.length);
+      setInputValue(preselectedBoxIds);
     }
   }, [AllCartons, Product]);
 
-  const handleSelectAll = (event) => {
-    if (event.target.checked) {
-      const allCartonIds = AllCartons?.map((option) => String(option.id));
-      setSelectedValues(allCartonIds);
-      setAllChecked(true);
-    } else {
-      setSelectedValues([]);
-      setAllChecked(false);
-    }
+
+  const handleChange = (event) => {
+    setInputValue(event.target.value); // Update input value
   };
 
-  const handleSelectChange = (event) => {
-    const { value } = event.target;
-    if (value.includes('all')) {
-      const allCartonIds = AllCartons?.map((option) => String(option.id));
-      setSelectedValues(allCartonIds);
-      setAllChecked(true);
-      return;
-    }
-    const updatedValues = value.filter((val) => val !== 'all');
-    setSelectedValues(updatedValues);
-    setAllChecked(updatedValues.length === AllCartons?.length);
-  };
 
   const renderDetails = (
     <>
@@ -254,8 +235,16 @@ export default function ProductNewEditForm({ currentProduct }) {
             </RHFSelect>
 
             <FormControl fullWidth sx={{ marginTop: 2 }}>
-              <InputLabel>Select Box</InputLabel>
-              <Select
+              <RHFTextField
+                  fullWidth
+                  type="text"
+                  name="box_id"
+                  id="box_id"
+                  label="Box ID"
+                  value={inputValue}
+                  onChange={handleChange}
+                />
+              {/* <Select
                 label="Select Box"
                 id="box_id"
                 name="box_id"
@@ -292,7 +281,7 @@ export default function ProductNewEditForm({ currentProduct }) {
                     <Typography variant="body1">{option.request_id}</Typography>
                   </MenuItem>
                 ))}
-              </Select>
+              </Select> */}
             </FormControl>
           </Stack>
         </Card>

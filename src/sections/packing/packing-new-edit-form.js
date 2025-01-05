@@ -82,7 +82,7 @@ export default function ProductNewEditForm({ currentProduct }) {
   const values = watch();
 
   const batchNumberValue = methods.watch('batch_number');
-  const serialNumberValue = methods.watch('serial_number') || methods.watch('serial_number2');
+  const serialNumberValue = methods.watch('serial_number');
 
   const backToFirstForm = () => {
     setShowSecondForm(false);
@@ -94,7 +94,7 @@ export default function ProductNewEditForm({ currentProduct }) {
   };
 
   const addSerialNumber = async () => {
-    const serialNumber = methods.getValues('serial_number') || methods.getValues('serial_number2');
+    const serialNumber = methods.getValues('serial_number');
     if (!serialNumber) {
       enqueueSnackbar('Please enter a serial number.', { variant: 'warning' });
       return;
@@ -248,7 +248,6 @@ export default function ProductNewEditForm({ currentProduct }) {
         setshowFirstForm(false);
         setShowSecondForm(true);
         methods.setValue('serial_number', '');
-          methods.setValue('serial_number2', '');
       } else {
         enqueueSnackbar(responseData.message || 'Failed to submit request IDs.', {
           variant: 'error',
@@ -279,18 +278,6 @@ export default function ProductNewEditForm({ currentProduct }) {
                 </Button>
               </Box>
               <Box sx={{ mb: 3 }}>
-                <RHFTextField
-                  fullWidth
-                  type="text"
-                  name="serial_number2"
-                  id="serial_number2"
-                  inputProps={{ maxLength: 6 }}
-                  label="Last 6 Digits Serial Number"
-                  disabled={!!batchNumberValue}
-                />
-                <div>
-                  <center>OR</center>
-                </div>
                 <RHFTextField
                   fullWidth
                   type="text"
@@ -376,7 +363,7 @@ export default function ProductNewEditForm({ currentProduct }) {
                     <TableRow>
                       <TableCell>#</TableCell>
                       <TableCell>Batch Number</TableCell>
-                      <TableCell>Quality Checked Number</TableCell>
+                      <TableCell>Authenticity Card Number</TableCell>
                       <TableCell>Model Number</TableCell>
                       <TableCell>Category Name</TableCell>
                       <TableCell>Serial Number</TableCell>

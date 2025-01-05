@@ -223,31 +223,31 @@ export default function ProductNewEditForm({ currentProduct }) {
   });
 
 
-  // Image Handler
-  const createImageHandler = (imageKey, setOption) => useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
+  // // Image Handler Removed
+  // const createImageHandler = (imageKey, setOption) => useCallback(
+  //   (acceptedFiles) => {
+  //     const file = acceptedFiles[0];
 
-      const newFile = file && Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
+  //     const newFile = file && Object.assign(file, {
+  //       preview: URL.createObjectURL(file),
+  //     });
 
-      setValue(imageKey, newFile, { shouldValidate: true });
-      setOption(true);
-    },
-    [setValue, setOption]
-  );
+  //     setValue(imageKey, newFile, { shouldValidate: true });
+  //     setOption(true);
+  //   },
+  //   [setValue, setOption]
+  // );
 
-  const createRemoveFileHandler = (imageKey) => useCallback(() => {
-    setValue(imageKey, null);
-  }, [setValue]);
+  // const createRemoveFileHandler = (imageKey) => useCallback(() => {
+  //   setValue(imageKey, null);
+  // }, [setValue]);
 
-  useEffect(() => {
-    if (currentProduct) {
-      setValue('image1', currentProduct ? currentProduct.image1 : null);
-      setValue('image2', currentProduct ? currentProduct.image2 : null);
-    }
-  }, [currentProduct, setValue]);
+  // useEffect(() => {
+  //   if (currentProduct) {
+  //     setValue('image1', currentProduct ? currentProduct.image1 : null);
+  //     setValue('image2', currentProduct ? currentProduct.image2 : null);
+  //   }
+  // }, [currentProduct, setValue]);
 
   const renderDetails = (
     <>
@@ -272,7 +272,7 @@ export default function ProductNewEditForm({ currentProduct }) {
               getOptionLabel={(option) => option}
             />
 
-            <RHFUpload
+            {/* <RHFUpload
               name="image1"
               maxSize={3145728}
               onDrop={createImageHandler('image1', setImage1Option)}
@@ -284,10 +284,8 @@ export default function ProductNewEditForm({ currentProduct }) {
               maxSize={3145728}
               onDrop={createImageHandler('image2', setImage2Option)}
               onDelete={createRemoveFileHandler('image2')}
-            />
+            /> */}
 
-
-            <RHFTextField id="description" name="description" label="Description" multiline rows={4} />
 
             {/* <RHFSelect
               fullWidth

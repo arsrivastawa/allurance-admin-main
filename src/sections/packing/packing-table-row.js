@@ -57,7 +57,7 @@ export default function InvoiceTableRow({
     setOpenDialog(false);
   };
 
-  const CSV_HEADER = ['Batch Number', 'Quality Check Number', 'Model Number', 'Category', 'Serial Number, Box Id'];
+  const CSV_HEADER = ['Batch Number', 'Authenticity Card Number', 'Model Number', 'Category', 'Serial Number, Box Id'];
 
   const downloadCSV = (row) => {
     const data = row.records.map(record => [row.batch_number, `="${record.quality_checked_number}"`, row.model_number, record.category_name, `="${record.serial_number}"`,`="${row.request_id}"`]);
@@ -123,7 +123,7 @@ export default function InvoiceTableRow({
                   <tr>
                     <th style={{ border: '1px solid #ddd', padding: '8px' }}>#</th>
                     <th style={{ border: '1px solid #ddd', padding: '8px' }}>Batch Number</th>
-                    <th style={{ border: '1px solid #ddd', padding: '8px' }}>Quality Checked Number</th>
+                    <th style={{ border: '1px solid #ddd', padding: '8px' }}>Authenticity Card Number</th>
                     <th style={{ border: '1px solid #ddd', padding: '8px' }}>Model Number</th>
                     <th style={{ border: '1px solid #ddd', padding: '8px' }}>Category Name</th>
                     <th style={{ border: '1px solid #ddd', padding: '8px' }}>Serial Number</th>

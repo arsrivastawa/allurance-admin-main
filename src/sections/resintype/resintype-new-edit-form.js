@@ -130,9 +130,6 @@ export default function ProductNewEditForm({ currentProduct }) {
 
             <RHFTextField id="code" name="code" label="Code" />
 
-
-            <RHFTextField id="description" name="description" label="Description" multiline rows={4} />
-
             {/* <RHFSelect
               fullWidth
               name="pair"

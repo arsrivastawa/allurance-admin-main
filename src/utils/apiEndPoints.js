@@ -68,6 +68,8 @@ export const ine_state_district_tablename = 'ine_state_district'; // Table Name
 export const OTHER_STATE_DISTRICT_E1_ENDPOINT = `${apiUrl}/others/state_district/endpoint1`; // Endpoint to manage other - state list
 export const OTHER_STATE_DISTRICT_E2_ENDPOINT = `${apiUrl}/others/state_district/endpoint2`; // Endpoint to manage other - district list
 export const OTHER_STATE_DISTRICT_E3_ENDPOINT = `${apiUrl}/others/state_district/endpoint3`; // Endpoint to manage other - pincode list
+export const OTHER_POSTOFFICE_ENDPOINT = `${apiUrl}/others/post_offices`;
+export const OTHER_PINCODES_ENDPOINT = `${apiUrl}/others/pincodes`;
 
 // ROLE MODULE
 export const ine_roles_tablename = 'ine_roles'; // Table Name

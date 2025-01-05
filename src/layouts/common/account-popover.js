@@ -51,7 +51,13 @@ export default function AccountPopover({ userNameInfo }) {
 
   const getListingData = async () => {
     try {
-      const response = await ManageAPIsData(`${USER_ENDPOINT}?id=${user.id}`, 'GET');
+      const token = await sessionStorage.getItem('accessToken');
+      if (!token) {
+        console.error("Token is undefined.");
+        return;
+      }
+      const headers = { Authorization: `Bearer `+ token };
+      const response = await ManageAPIsData(`${USER_ENDPOINT}?id=${user.id}`, 'GET',{ headers } , token);
       if (!response.ok) {
         console.error("Error fetching data:", response.statusText);
         return;

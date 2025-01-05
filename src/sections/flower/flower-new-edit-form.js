@@ -52,7 +52,6 @@ export default function ProductNewEditForm({ currentProduct }) {
   const defaultValues = useMemo(
     () => ({
       name: currentProduct?.name || '',
-      description: currentProduct?.description || '',
     }),
     [currentProduct]
   );
@@ -125,9 +124,6 @@ export default function ProductNewEditForm({ currentProduct }) {
 
 
             <RHFTextField id="name" name="name" label="Title" />
-
-
-            <RHFTextField id="description" name="description" label="Description" multiline rows={4} />
 
           </Stack>
         </Card>

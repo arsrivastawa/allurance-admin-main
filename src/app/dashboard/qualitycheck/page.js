@@ -19,7 +19,6 @@ export default function ProductListPage() {
   if (!permissions) {
     return <div>Loading...</div>;
   }
-
   const { read_access } = permissions;
 
   return read_access === 1 ? (

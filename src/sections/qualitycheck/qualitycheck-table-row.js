@@ -127,7 +127,7 @@ export default function InvoiceTableRow({
                   <tr>
                     <th style={{ border: '1px solid #ddd', padding: '8px' }}>#</th>
                     <th style={{ border: '1px solid #ddd', padding: '8px' }}>Serial Number</th>
-                    <th style={{ border: '1px solid #ddd', padding: '8px' }}>Quality Checked Number</th>
+                    <th style={{ border: '1px solid #ddd', padding: '8px' }}>Authenticity Card Number</th>
                     <th style={{ border: '1px solid #ddd', padding: '8px' }}>Model Number</th>
                     <th style={{ border: '1px solid #ddd', padding: '8px' }}>Category Name</th>
                     <th style={{ border: '1px solid #ddd', padding: '8px' }}>Serial Number</th>

@@ -43,6 +43,8 @@ import {
   OTHER_STATE_DISTRICT_E1_ENDPOINT,
   OTHER_STATE_DISTRICT_E2_ENDPOINT,
   OTHER_STATE_DISTRICT_E3_ENDPOINT,
+  OTHER_PINCODES_ENDPOINT,
+  OTHER_POSTOFFICE_ENDPOINT
 } from '../../utils/apiEndPoints';
 import Box from '@mui/material/Box';
 import { fData } from 'src/utils/format-number';
@@ -64,6 +66,10 @@ export default function ProductNewEditForm({ currentProduct }) {
   const [stateDistrictE1Options, setStateDistrictE1Options] = useState([]);
   const [stateDistrictE2Options, setStateDistrictE2Options] = useState([]);
   const [stateDistrictE3Options, setStateDistrictE3Options] = useState([]);
+  const [postOfficeOptions, setPostOfficeOptions] = useState([]);
+  const [stateOptions, setStateOptions] = useState([]);
+  const [distOptions, setDistOptions] = useState([]);
+  const [pincodeOptions, setPincodeOptions] = useState([]);
   const [govIDOption, setgovIDOption] = useState(false);
   const [panIDOption, setpanIDOption] = useState(false);
   const [avatarIDOption, setavatarIDOption] = useState(false);
@@ -102,6 +108,8 @@ export default function ProductNewEditForm({ currentProduct }) {
       district: currentProduct?.district || '',
       district_id: currentProduct?.district_id || 0,
       pincode: currentProduct?.pincode || '',
+      post_office: currentProduct?.post_office || '',
+      post_office_id: currentProduct?.post_office_id || '',
       govt_id_number: currentProduct?.govt_id_number || '',
       govt_id_upload: currentProduct?.govt_id_upload || null,
       pan_number: currentProduct?.pan_number || '',
@@ -228,7 +236,6 @@ export default function ProductNewEditForm({ currentProduct }) {
         console.error('Token is undefined.');
         return;
       }
-
       const response = await ManageAPIsDataWithFile(apiUrl, fetchMethod, {
         ...data,
         headers: { Authorization: `Bearer ${token}` },
@@ -248,11 +255,14 @@ export default function ProductNewEditForm({ currentProduct }) {
     }
   });
 
-  const getStateDistrictE1ListingData = async () => {
+  const getStateDistrictE1ListingData = async (Pincode) => {
     try {
-      const apiUrl = OTHER_STATE_DISTRICT_E1_ENDPOINT;
-      const response = await ManageAPIsData(apiUrl, 'GET');
+      const data1 = {
+        Pincode: Pincode,
+      };
 
+      const apiUrl = OTHER_STATE_DISTRICT_E1_ENDPOINT;
+      const response = await ManageAPIsData(apiUrl, 'POST', data1);
       if (!response.ok) {
         console.error('Error fetching data:', response.statusText);
         return;
@@ -315,6 +325,52 @@ export default function ProductNewEditForm({ currentProduct }) {
       console.error('Error fetching data:', error);
     }
   };
+  const getPincodeListingData = async () => {
+    try {
+      const apiUrl = OTHER_PINCODES_ENDPOINT;
+      const response = await ManageAPIsData(apiUrl, 'GET');
+
+      if (!response.ok) {
+        console.error('Error fetching data:', response.statusText);
+        return;
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.data.length) {
+        setPincodeOptions(responseData.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  const getDatabyPincode = async (pincode)=>{
+  
+    try {
+      const data1 = {
+        Pincode: pincode,
+      };
+      const apiUrl = OTHER_POSTOFFICE_ENDPOINT;
+      const response = await ManageAPIsData(apiUrl, 'POST', data1);
+
+      if (!response.ok) {
+        console.error('Error fetching data:', response.statusText);
+        return;
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.data.length) {
+        setPostOfficeOptions(responseData.data);
+        methods.setValue('state_id', responseData.data[0].StateId);
+        methods.setValue('district_id', responseData.data[0].DistrictId);
+        methods.setValue('state', responseData.data[0].StateName);
+        methods.setValue('district', responseData.data[0].DistrictName);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   // Listing data
   const getRoleListingData = async (shapeId = null) => {
@@ -346,13 +402,14 @@ export default function ProductNewEditForm({ currentProduct }) {
 
   useEffect(() => {
     getRoleListingData();
-    getStateDistrictE1ListingData();
+    getPincodeListingData();
   }, []);
 
   useEffect(() => {
     if (currentProduct) {
-      getStateDistrictE2ListingData(currentProduct.state_id);
-      getStateDistrictE3ListingData(currentProduct.district);
+      // getStateDistrictE1ListingData(currentProduct.pincode);
+      // getStateDistrictE2ListingData(currentProduct.state_id);
+      // getStateDistrictE4ListingData(currentProduct.district_id);
       setValue('govt_id_upload', currentProduct ? currentProduct.govt_id_upload : null);
       setValue('pan_upload', currentProduct ? currentProduct.pan_upload : null);
     }
@@ -368,17 +425,20 @@ export default function ProductNewEditForm({ currentProduct }) {
     const selectedName = e;
     getStateDistrictE2ListingData(selectedName);
     methods.setValue('district', '');
-    methods.setValue('pincode', '');
+    methods.setValue('post_office', '');
   };
 
   const handleDistrictSelectionChange = (e) => {
     getStateDistrictE3ListingData(e);
-    methods.setValue('pincode', '');
+    methods.setValue('post_office', '');
   };
 
   const handlePincodeSelectionChange = (e) => {
-    const selectedName = e;
-    methods.setValue('pincode', selectedName);
+    const selectedPincode = e;
+
+    getDatabyPincode(selectedPincode);
+   // methods.setValue('pincode', selectedPincode);
+  
   };
 
   const renderNormalForm = (
@@ -519,31 +579,52 @@ export default function ProductNewEditForm({ currentProduct }) {
           >
             <RHFTextField name="address" label="Address" />
             <RHFAutocomplete
+              id="pincode"
+              name="pincode"
+              label="Pincode"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              PaperPropsSx={{ textTransform: 'capitalize' }}
+              options={pincodeOptions.map((option) => ({
+                Pincode: option.Pincode,
+                value: option.Pincode,
+              }))}
+              getOptionLabel={(option) => (typeof option === 'object' ? option.Pincode : '')}
+              getOptionValue={(option) => (typeof option === 'object' ? option.Pincode : '')}
+              value={
+                pincodeOptions.find((option) => option.Pincode === methods.watch('pincode')) ||
+                null
+              }
+              onChange={(e, value) => {
+                handlePincodeSelectionChange(value ? value.Pincode : '');
+                methods.setValue('pincode', value ? value.value : '');
+              }}
+              isOptionEqualToValue={(option, value) => option.value === value.value} // Customize the equality test
+            />
+            <RHFTextField name="state" label="State" />
+            <RHFTextField name="district" label="District" />
+            {/* <RHFAutocomplete
               id="state"
               name="state"
               label="State"
               fullWidth
               InputLabelProps={{ shrink: true }}
               PaperPropsSx={{ textTransform: 'capitalize' }}
-              options={stateDistrictE1Options.map((option) => ({
+              options={postOfficeOptions.map((option) => ({
                 StateName: option.StateName,
-                value: option.id,
+                value: option.StateId,
               }))}
+              disabled
               getOptionLabel={(option) => (typeof option === 'object' ? option.StateName : '')}
-              getOptionValue={(option) => (typeof option === 'object' ? option.id : '')}
+              getOptionValue={(option) => (typeof option === 'object' ? option.value : '')}
               value={
-                stateDistrictE1Options.find(
-                  (option) => option.StateName === methods.watch('state')
+                postOfficeOptions.find(
+                  (option) => option.StateId === methods.watch('state_id')
                 ) || null
               }
-              onChange={(e, value) => {
-                handleStateSelectionChange(value ? value.value : '');
-                methods.setValue('state', value ? value.StateName : '');
-                methods.setValue('state_id', value ? value.value : '');
-              }}
-              isOptionEqualToValue={(option, value) => option.value === value} 
+              isOptionEqualToValue={(option, value) => option.value === value.value} 
             />
-
+             
             <RHFAutocomplete
               id="district"
               name="district"
@@ -551,48 +632,67 @@ export default function ProductNewEditForm({ currentProduct }) {
               fullWidth
               InputLabelProps={{ shrink: true }}
               PaperPropsSx={{ textTransform: 'capitalize' }}
-              options={stateDistrictE2Options.map((option) => ({
-                District: option.District,
-                value: option.id,
+              options={postOfficeOptions.map((option) => ({
+                District: option.DistrictName,
+                value: option.DistrictId,
               }))}
-              getOptionLabel={(option) => (typeof option === 'object' ? option.District : '')}
-              getOptionValue={(option) => (typeof option === 'object' ? option.id : '')}
+              getOptionLabel={(option) => (typeof option === 'object' ? option.DistrictName : '')}
+              getOptionValue={(option) => (typeof option === 'object' ? option.value : '')}
               value={
-                stateDistrictE2Options.find(
-                  (option) => option.District === methods.watch('district')
+                postOfficeOptions.find(
+                  (option) => option.DistrictId === methods.watch('district_id')
                 ) || null
               }
-              onChange={(e, value) => {
-                handleDistrictSelectionChange(value ? value.District : '');
-                methods.setValue('district', value ? value.District : '');
-                methods.setValue('district_id', value ? value.value : '');
-              }}
-              isOptionEqualToValue={(option, value) => option.value === value} 
-            />
-
+              disabled
+              isOptionEqualToValue={(option, value) => option.value === value.value} 
+            /> */}
             <RHFAutocomplete
-              id="pincode"
-              name="pincode"
-              label="Pincode"
+              id="post_office"
+              name="post_office"
+              label="postOffice"
               fullWidth
               InputLabelProps={{ shrink: true }}
               PaperPropsSx={{ textTransform: 'capitalize' }}
-              options={stateDistrictE3Options.map((option) => ({
-                Pincode: option.Pincode,
-                value: option.id,
+              options={postOfficeOptions.map((option) => ({
+                post_office_name: option.post_office_name,
+                value: option.post_office_id,
               }))}
-              getOptionLabel={(option) => (typeof option === 'object' ? option.Pincode : '')}
-              getOptionValue={(option) => (typeof option === 'object' ? option.id : '')}
+              getOptionLabel={(option) => (typeof option === 'object' ? option.post_office_name : '')}
+              getOptionValue={(option) => (typeof option === 'object' ? option.post_office_id : '')}
               value={
-                stateDistrictE3Options.find((option) => option.id === methods.watch('pincode')) ||
+                postOfficeOptions.find((option) => option.post_office_id === methods.watch('post_office_id')) ||
                 null
               }
               onChange={(e, value) => {
-                handlePincodeSelectionChange(value ? value.Pincode : '');
-                methods.setValue('pincode', value ? value.value : '');
+                methods.setValue('post_office_name', value ? value.post_office_name : '');
+                methods.setValue('post_office_id', value ? value.value : '');
               }}
-              isOptionEqualToValue={(option, value) => option.value === value} // Customize the equality test
+              isOptionEqualToValue={(option, value) => option.post_office_id === value.post_office_id} // Customize the equality test
             />
+            {/* <RHFAutocomplete
+              id="post_office"
+              name="post_office"
+              label="PostOffice"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              PaperPropsSx={{ textTransform: 'capitalize' }}
+              options={postOfficeOptions.map((option) => ({
+                post_office_name: option.post_office_name,
+                value: option.post_office_id,
+              }))}
+              getOptionLabel={(option) => (typeof option === 'object' ? option.post_office_name : '')}
+              getOptionValue={(option) => (typeof option === 'object' ? option.value : '')}
+              value={
+                postOfficeOptions.find(
+                  (option) => option.post_office_id === methods.watch('post_office_id')
+                ) || null
+              }
+              isOptionEqualToValue={(option, value) => option.value === value.value} 
+              onChange={(e, value) => {
+                methods.setValue('post_office', value ? value.post_office_name : '');
+                methods.setValue('post_office_id', value ? value.value : '');
+              }}
+            />     */}
             
           </Box>
         </Card>

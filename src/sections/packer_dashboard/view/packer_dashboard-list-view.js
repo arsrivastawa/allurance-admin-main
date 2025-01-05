@@ -145,7 +145,7 @@ export default function ProductListView(permissions) {
     },
     {
       field: 'quality_checked_number',
-      headerName: 'Quality Checked Number',
+      headerName: 'Authenticity Card Number',
       flex: 1,
       hideable: false,
       renderCell: (params) => <RenderCellSequenceNumber params={params} />,
