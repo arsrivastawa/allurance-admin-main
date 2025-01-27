@@ -210,7 +210,7 @@ export default function ProductNewEditForm({ currentProduct, permissions }) {
                                     permissionOptions.map((data, index) => {
                                         return (
                                             <tr key={data.id}>
-                                                <td scope="row">{index + 1}</td>
+                                                <td scope="row">{data.id}</td>
                                                 <td>{data.name ? data.name : ''}</td>
                                                 <td>
                                                     <Checkbox

@@ -55,6 +55,8 @@ export default function ProductNewEditForm({ currentProduct }) {
     name: Yup.string().required('Name is required'),
     // company_name: Yup.string().required('Company name is required'),
     email: Yup.string().required('E-mail is required'),
+    total_amount: Yup.string().required('Total amount is required'),
+    description: Yup.string().required('Description is required'),
   });
 
   const defaultValues = useMemo(

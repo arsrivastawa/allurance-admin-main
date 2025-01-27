@@ -112,7 +112,10 @@ export default function InvoiceListView() {
       const response = await ManageAPIsDataWithHeader(apiUrl, fetchMethod, data);
       const responseData = await response.json();
       if (responseData) {
-        setTableData(responseData.data); // Set the response data to the tableData state
+        if(responseData.data){
+          setTableData(responseData.data); // Set the response data to the tableData state
+        }
+       
       }
     } catch (error) {
       console.error("Error fetching designer data:", error);

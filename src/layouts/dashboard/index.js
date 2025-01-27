@@ -147,7 +147,7 @@ export default function DashboardLayout({ children }) {
     const apiUrl = MODULES_MODULE_ENDPOINT;
     try {
       const responseData = await fetchDataFromApi(apiUrl, 'GET');
-      if (responseData) {
+      if (customAccordionDiv) {
         setModuleOptions(responseData);
       }
     } catch (error) {

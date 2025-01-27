@@ -40,7 +40,7 @@ export default function ProductNewEditForm({ currentProduct }) {
   const calculateTotal = () => {
     return rows.reduce((total, row) => {
       const value = parseInt(row.value) || 0;
-      const multiplication = parseInt(row.multiplication) || 1;
+      const multiplication = parseInt(row.multiplication) || 0;
       return total + value * multiplication;
     }, 0);
   };
@@ -94,13 +94,31 @@ export default function ProductNewEditForm({ currentProduct }) {
     { value: 'Yes', label: 'Yes' },
     { value: 'No', label: 'No' },
   ];
-
-  const NewProductSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    // company_name: Yup.string().required('Company name is required'),
-    email: Yup.string().required('E-mail is required'),
-  });
-
+  const createDynamicNestedSchema = (rows) => {
+    const dynamicFields = rows.reduce((acc, row) => {
+      if(!row.value ){
+        acc[`value-${row.id}`] = Yup.string().required(`Value  is required`);
+      }
+      if(!row.multiplication){
+        acc[`Multiplication-${row.id}`] = Yup.string().required(`Quantity  is required`);
+      }
+      console.log(acc)
+      return acc;
+    }, {});
+  
+    return Yup.object().shape({
+      name: Yup.string().required('Name is required'),
+      email: Yup.string().required('E-mail is required'),
+      ...dynamicFields,
+    });
+  };
+  // const NewProductSchema = Yup.object().shape({
+  //   name: Yup.string().required('Name is required'),
+  //   // company_name: Yup.string().required('Company name is required'),
+  //   email: Yup.string().required('E-mail is required'),
+   
+  // });
+const NewProductSchema = createDynamicNestedSchema(rows);
   const methods = useForm({
     resolver: yupResolver(NewProductSchema),
     defaultValues,
