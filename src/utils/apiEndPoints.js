@@ -1,7 +1,7 @@
 // src/utils/apiEndPoint.js
 
 // .env variables
-const apiUrl = process.env.NEXT_PUBLIC_API_URL; // 'http://localhost:3032/api';
+const apiUrl = 'http://localhost:3000/api'; // process.env.NEXT_PUBLIC_API_URL
 
 // ABOUT MODULE
 export const ine_about_tablename = 'ine_about_us'; // Table Name
@@ -70,6 +70,7 @@ export const OTHER_STATE_DISTRICT_E2_ENDPOINT = `${apiUrl}/others/state_district
 export const OTHER_STATE_DISTRICT_E3_ENDPOINT = `${apiUrl}/others/state_district/endpoint3`; // Endpoint to manage other - pincode list
 export const OTHER_POSTOFFICE_ENDPOINT = `${apiUrl}/others/post_offices`;
 export const OTHER_PINCODES_ENDPOINT = `${apiUrl}/others/pincodes`;
+export const FRONTEND_GET_BY_PINCODE = `${apiUrl}/myaddress/getByPinCode`
 
 // ROLE MODULE
 export const ine_roles_tablename = 'ine_roles'; // Table Name
@@ -180,7 +181,7 @@ export const ine_campaign_tablename = 'ine_campaign'; // Table Name
 export const ine_campaign_ModuleID = 98; // Module ID
 export const CAMPAIGN_ENDPOINT = `${apiUrl}/campaign`; // Endpoint to manage campaign
 export const FETCH_PRODUCTS_BY_CATEGORY = `${apiUrl}/fetchrawproducts`; // Endpoint to products by category
-export const FETCH_PRODUCT_BASED_ON_MODEL_NUMBER = `${apiUrl}/campaign/fetchproductbasedonmodel`
+export const FETCH_PRODUCT_BASED_ON_MODEL_NUMBER = `${apiUrl}/campaign/fetchproductbasedonmodel`;
 
 // PACKERS  MODULE
 export const ine_packers_tablename = 'ine_packers'; // Table Name
@@ -274,7 +275,6 @@ export const user_affiliate_tablename = 'ine_affiliate_program'; // Table Name
 export const AFFILIATE_ENDPOINT = `${apiUrl}/affiliate`; // Endpoint to manage AFFILIATE
 export const AFFILIATE_REJECT_ENDPOINT = `${apiUrl}/affiliate/reject`; // Endpoint to manage AFFILIATE
 export const AFFILIATE_USER_ENDPOINT = `${apiUrl}/affiliate/users`; // ENDPOINT OF AFFILIATE USER
-
 
 // FAQS MODULE
 export const ine_faq_ModuleID = 133; // Module ID
@@ -419,69 +419,62 @@ export const MANAGE_OFFLINE_SALES_FETCH_ALL_PRODUCT = `${apiUrl}/manage_offline_
 export const MANAGE_OFFLINE_SALES_GET_SERIAL_NO_BASED_ON_PRODUCT = `${apiUrl}/manage_offline_sales/get_serial_number_based_on_product`;
 export const MANAGE_OFFLINE_SALES_LISTING = `${apiUrl}/manage_offline_sales/offline_sales_listing`;
 
-
 // MANAGE BATCHES
 export const MANAGE_BATCHES = `${apiUrl}/manage_batches`;
 
 // MANAGE_SALES_REPORTS
-export const MANAGE_SALES_REPORTS = `${apiUrl}/manage_sales_reports`
+export const MANAGE_SALES_REPORTS = `${apiUrl}/manage_sales_reports`;
 
 // MANAGE_SELL
-export const MANAGE_SELL = `${apiUrl}/manage_sell`
+export const MANAGE_SELL = `${apiUrl}/manage_sell`;
 
 // MANAGE_TICKET
-export const MANAGE_TICKET_SUBJECT = `${apiUrl}/ticket/subject`
-export const MANAGE_TICKET = `${apiUrl}/ticket`
-export const MANAGE_TICKET_USER = `${apiUrl}/ticket/ticket-front-users`
-export const MANAGE_TICKET_RESPONSE = `${apiUrl}/ticket/response`
-export const MANAGE_TICKET_ASSIGN_USERS = `${apiUrl}/ticket/ticket-assign-users`
-export const MANAGE_TICKET_ASSIGN_TICKETS = `${apiUrl}/ticket/assignticket`
-export const MANAGE_TICKET_TICKETS_CLOSED = `${apiUrl}/ticket/ticket-close`
+export const MANAGE_TICKET_SUBJECT = `${apiUrl}/ticket/subject`;
+export const MANAGE_TICKET = `${apiUrl}/ticket`;
+export const MANAGE_TICKET_USER = `${apiUrl}/ticket/ticket-front-users`;
+export const MANAGE_TICKET_RESPONSE = `${apiUrl}/ticket/response`;
+export const MANAGE_TICKET_ASSIGN_USERS = `${apiUrl}/ticket/ticket-assign-users`;
+export const MANAGE_TICKET_ASSIGN_TICKETS = `${apiUrl}/ticket/assignticket`;
+export const MANAGE_TICKET_TICKETS_CLOSED = `${apiUrl}/ticket/ticket-close`;
 
 // DESIGNER DASHBOARD
-export const DESIGNER_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/designer-users`
-export const DESIGNER_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/designer-records`
+export const DESIGNER_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/designer-users`;
+export const DESIGNER_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/designer-records`;
 
 // REPLICATOR DASHBOARD
-export const REPLICATOR_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/replicator-users`
-export const REPLICATOR_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/replicator-records`
+export const REPLICATOR_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/replicator-users`;
+export const REPLICATOR_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/replicator-records`;
 
 // PACKERS DASHBOARD
-export const PACKERS_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/packer-users`
-export const PACKERS_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/packer-records`
+export const PACKERS_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/packer-users`;
+export const PACKERS_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/packer-records`;
 
 // WAREHOUSE DASHBOARD
-export const WAREHOUSE_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/warehouse-users`
-export const WAREHOUSE_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/warehouse-records`
+export const WAREHOUSE_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/warehouse-users`;
+export const WAREHOUSE_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/warehouse-records`;
 
 // MARKETING DASHBOARD
-export const MARKETING_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/marketing-users`
-export const MARKETING_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/marketing-records`
+export const MARKETING_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/marketing-users`;
+export const MARKETING_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/marketing-records`;
 
 // SUPPORT DASHBOARD
-export const SUPPORT_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/support-users`
-export const SUPPORT_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/support-records`
+export const SUPPORT_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/support-users`;
+export const SUPPORT_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/support-records`;
 
 // OFFLINE_SALES DASHBOARD
-export const OFFLINE_SALES_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/offline-sales-users`
-export const OFFLINE_SALES_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/offline-sales-records`
+export const OFFLINE_SALES_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/offline-sales-users`;
+export const OFFLINE_SALES_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/offline-sales-records`;
 
 // AFFILIATION DASHBOARD
-export const AFFILIATION_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/affiliation-users`
-export const AFFILIATION_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/affiliation-records`
+export const AFFILIATION_DASHBOARD_CARD_DATA = `${apiUrl}/manage_dashboard/affiliation-users`;
+export const AFFILIATION_DASHBOARD_RECORDS = `${apiUrl}/manage_dashboard/affiliation-records`;
 
 // ADMIN DASHBOARD
-export const ADMIN_DASHBOARD_ALL_USERS = `${apiUrl}/manage_dashboard/admin-all-users`
-export const ADMIN_DASHBOARD_ROLES = `${apiUrl}/manage_dashboard/admin-roles`
-export const ADMIN_DASHBOARD_ORDER = `${apiUrl}/manage_dashboard/admin-orders`
-export const ADMIN_DASHBOARD_BLOGS = `${apiUrl}/manage_dashboard/admin-blogs`
-export const ADMIN_DASHBOARD_CONTACT_INQUIRY = `${apiUrl}/manage_dashboard/admin-contact-inquiry`
-export const ADMIN_DASHBOARD_GIFT_CARD = `${apiUrl}/manage_dashboard/admin-giftcard`
-export const ADMIN_DASHBOARD_RATING = `${apiUrl}/manage_dashboard/admin-rating`
-export const ADMIN_DASHBOARD_CAMPAIGN = `${apiUrl}/manage_dashboard/admin-campaign`
-
-
-
-
-
-
+export const ADMIN_DASHBOARD_ALL_USERS = `${apiUrl}/manage_dashboard/admin-all-users`;
+export const ADMIN_DASHBOARD_ROLES = `${apiUrl}/manage_dashboard/admin-roles`;
+export const ADMIN_DASHBOARD_ORDER = `${apiUrl}/manage_dashboard/admin-orders`;
+export const ADMIN_DASHBOARD_BLOGS = `${apiUrl}/manage_dashboard/admin-blogs`;
+export const ADMIN_DASHBOARD_CONTACT_INQUIRY = `${apiUrl}/manage_dashboard/admin-contact-inquiry`;
+export const ADMIN_DASHBOARD_GIFT_CARD = `${apiUrl}/manage_dashboard/admin-giftcard`;
+export const ADMIN_DASHBOARD_RATING = `${apiUrl}/manage_dashboard/admin-rating`;
+export const ADMIN_DASHBOARD_CAMPAIGN = `${apiUrl}/manage_dashboard/admin-campaign`;

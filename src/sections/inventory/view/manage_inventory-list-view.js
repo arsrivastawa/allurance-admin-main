@@ -300,7 +300,7 @@ export default function ProductListView() {
           flexDirection: 'column',
         }}
       >
-        <CustomBreadcrumbs
+        {/*<CustomBreadcrumbs
           heading="List"
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
@@ -326,7 +326,7 @@ export default function ProductListView() {
               md: 5,
             },
           }}
-        />
+        />*/}
 
         <Card
           sx={{

@@ -208,7 +208,7 @@ export default function InvoiceListView() {
             if (response.ok) { // Check if the response status is OK (200-299)
                 const foundUser = await response.json();
                 // console.log("USER DETAILS", foundUser.data)
-                setUserDetails(foundUser.data); // Store the user details
+                setUserDetails(foundUser.data[0]); // Store the user details
                 setUserNotFound(false);
                 setUserSearched(true);
                 enqueueSnackbar('User found');

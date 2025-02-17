@@ -54,6 +54,9 @@ import {
 } from '../../utils/commonFunction';
 import {
   CUSTOMER_ENDPOINT,
+  FRONTEND_GET_BY_PINCODE,
+  OTHER_PINCODES_ENDPOINT,
+  OTHER_POSTOFFICE_ENDPOINT,
   OTHER_STATE_DISTRICT_E1_ENDPOINT,
   OTHER_STATE_DISTRICT_E2_ENDPOINT,
   OTHER_STATE_DISTRICT_E3_ENDPOINT,
@@ -82,7 +85,9 @@ export default function ProductNewEditForm({ currentProduct, fetchedData }) {
   const [stateDistrictE1Options, setStateDistrictE1Options] = useState([]);
   const [stateDistrictE2Options, setStateDistrictE2Options] = useState([]);
   const [stateDistrictE3Options, setStateDistrictE3Options] = useState([]);
+  const [postOfficeOptions, setPostOfficeOptions] = useState([]);
   const [avatarIDOption, setavatarIDOption] = useState(false);
+  const [pincodeOptions, setPincodeOptions] = useState([]);
 
   const NewProductSchema = Yup.object().shape({
     first_name: Yup.string().required('First Name is required'),
@@ -157,6 +162,54 @@ export default function ProductNewEditForm({ currentProduct, fetchedData }) {
     },
     [setValue]
   );
+
+  const getPincodeListingData = async () => {
+      try {
+        const apiUrl = OTHER_PINCODES_ENDPOINT;
+        const response = await ManageAPIsData(apiUrl, 'GET');
+  
+        if (!response.ok) {
+          console.error('Error fetching data:', response.statusText);
+          return;
+        }
+  
+        const responseData = await response.json();
+  
+        if (responseData.data.length) {
+          setPincodeOptions(responseData.data);
+          
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    const getDatabyPincode = async (pincode)=>{
+    
+      try {
+        const data1 = {
+          Pincode: pincode,
+        };
+        const apiUrl = OTHER_POSTOFFICE_ENDPOINT;
+        const response = await ManageAPIsData(apiUrl, 'POST', data1);
+  
+        if (!response.ok) {
+          console.error('Error fetching data:', response.statusText);
+          return;
+        }
+  
+        const responseData = await response.json();
+  
+        if (responseData.data.length) {
+          setPostOfficeOptions(responseData.data);
+          methods.setValue('state_id', responseData.data[0].StateId);
+          methods.setValue('district_id', responseData.data[0].DistrictId);
+          methods.setValue('state', responseData.data[0].StateName);
+          methods.setValue('district', responseData.data[0].DistrictName);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
 
   useEffect(() => {
     if (currentProduct) {
@@ -275,6 +328,7 @@ export default function ProductNewEditForm({ currentProduct, fetchedData }) {
 
   useEffect(() => {
     getStateDistrictE1ListingData();
+    getPincodeListingData();
   }, []);
 
   useEffect(() => {
@@ -298,6 +352,8 @@ export default function ProductNewEditForm({ currentProduct, fetchedData }) {
 
   const handlePincodeSelectionChange = (e) => {
     const selectedName = e;
+
+    getDatabyPincode(selectedName);
     methods.setValue('pincode', selectedName);
   };
 
@@ -413,15 +469,15 @@ export default function ProductNewEditForm({ currentProduct, fetchedData }) {
               fullWidth
               InputLabelProps={{ shrink: true }}
               PaperPropsSx={{ textTransform: 'capitalize' }}
-              options={stateDistrictE1Options.map((option) => ({
+              options={postOfficeOptions.map((option) => ({
                 StateName: option.StateName,
-                value: option.id,
+                value: option.StateId,
               }))}
               getOptionLabel={(option) => (typeof option === 'object' ? option.StateName : '')}
               getOptionValue={(option) => (typeof option === 'object' ? option.id : '')}
               value={
-                stateDistrictE1Options.find(
-                  (option) => option.StateName === methods.watch('state')
+                postOfficeOptions.find(
+                  (option) => option.StateId === methods.watch('state_id')
                 ) || null
               }
               onChange={(e, value) => {
@@ -439,15 +495,15 @@ export default function ProductNewEditForm({ currentProduct, fetchedData }) {
               fullWidth
               InputLabelProps={{ shrink: true }}
               PaperPropsSx={{ textTransform: 'capitalize' }}
-              options={stateDistrictE2Options.map((option) => ({
-                District: option.District,
-                value: option.id,
+              options={postOfficeOptions.map((option) => ({
+                District: option.DistrictName,
+                value: option.DistrictId,
               }))}
-              getOptionLabel={(option) => (typeof option === 'object' ? option.District : '')}
+              getOptionLabel={(option) => (typeof option === 'object' ? option.DistrictName : '')}
               getOptionValue={(option) => (typeof option === 'object' ? option.id : '')}
               value={
-                stateDistrictE2Options.find(
-                  (option) => option.District === methods.watch('district')
+                postOfficeOptions.find(
+                  (option) => option.DistrictId === methods.watch('district_id')
                 ) || null
               }
               onChange={(e, value) => {
@@ -465,14 +521,14 @@ export default function ProductNewEditForm({ currentProduct, fetchedData }) {
               fullWidth
               InputLabelProps={{ shrink: true }}
               PaperPropsSx={{ textTransform: 'capitalize' }}
-              options={stateDistrictE3Options.map((option) => ({
+              options={pincodeOptions.map((option) => ({
                 Pincode: option.Pincode,
-                value: option.id,
+                value: option.Pincode,
               }))}
               getOptionLabel={(option) => (typeof option === 'object' ? option.Pincode : '')}
-              getOptionValue={(option) => (typeof option === 'object' ? option.id : '')}
+              getOptionValue={(option) => (typeof option === 'object' ? option.Pincode : '')}
               value={
-                stateDistrictE3Options.find((option) => option.id === methods.watch('pincode')) ||
+                pincodeOptions.find((option) => option.Pincode === methods.watch('pincode')) ||
                 null
               }
               onChange={(e, value) => {
